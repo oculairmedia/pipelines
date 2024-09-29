@@ -22,6 +22,13 @@ WORKDIR /app
 
 # Install Python dependencies
 COPY ./requirements.txt .
+
+# Copy embedded packages folder
+COPY ./embedded_packages /app/embedded_packages
+
+# Install hrpyc from embedded packages
+RUN pip3 install /app/embedded_packages/hrpyc
+
 RUN pip3 install uv && \
     if [ "$USE_CUDA" = "true" ]; then \
     pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/$USE_CUDA_DOCKER_VER --no-cache-dir; \
